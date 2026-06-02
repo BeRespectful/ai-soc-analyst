@@ -1,0 +1,191 @@
+[
+  {
+    "id": "ALRT-2026-0001",
+    "title": "Impossible travel followed by privileged mailbox rule creation",
+    "severity": "Critical",
+    "status": "New",
+    "source": "Microsoft Entra ID",
+    "tactic": "Credential Access",
+    "technique": "Valid Accounts",
+    "entity": "amaya.reed@contoso.com",
+    "timestamp": "2026-06-02T08:12:00Z",
+    "mitre_id": "T1078",
+    "description": "A privileged user authenticated from Singapore and Germany within 18 minutes, then created an external forwarding mailbox rule.",
+    "evidence": [
+      "Successful sign-in from 203.0.113.84 using unfamiliar ASN",
+      "Successful sign-in from 198.51.100.18 using compliant device claim",
+      "New-InboxRule created to forward invoices to external recipient",
+      "User has Global Reader and Exchange Administrator roles"
+    ],
+    "affected_assets": [
+      "Exchange Online",
+      "Microsoft Entra ID",
+      "amaya.reed@contoso.com"
+    ],
+    "recommended_actions": [
+      "Revoke active sessions and reset credentials",
+      "Disable suspicious forwarding rule",
+      "Review recent privileged role activations",
+      "Search for similar forwarding rules across tenant"
+    ],
+    "confidence": 94,
+    "risk_score": 98
+  },
+  {
+    "id": "ALRT-2026-0002",
+    "title": "Endpoint ransomware behavior detected on finance workstation",
+    "severity": "High",
+    "status": "In Progress",
+    "source": "Microsoft Defender for Endpoint",
+    "tactic": "Impact",
+    "technique": "Data Encrypted for Impact",
+    "entity": "FIN-LAP-023",
+    "timestamp": "2026-06-02T07:44:00Z",
+    "mitre_id": "T1486",
+    "description": "A workstation executed a process tree associated with rapid file renaming, shadow copy deletion, and suspicious encryption extensions.",
+    "evidence": [
+      "powershell.exe launched vssadmin.exe delete shadows /all /quiet",
+      "2,412 files renamed with .locked extension in 6 minutes",
+      "Suspicious parent process winword.exe spawned powershell.exe",
+      "Outbound connection to newly observed domain updates-sync.example"
+    ],
+    "affected_assets": [
+      "FIN-LAP-023",
+      "Finance file share",
+      "User: marcus.chen"
+    ],
+    "recommended_actions": [
+      "Isolate endpoint from network",
+      "Collect memory and disk forensic package",
+      "Block observed domain and hash indicators",
+      "Verify backup integrity for impacted file shares"
+    ],
+    "confidence": 89,
+    "risk_score": 91
+  },
+  {
+    "id": "ALRT-2026-0003",
+    "title": "Suspicious OAuth consent grant for mail.read permissions",
+    "severity": "High",
+    "status": "New",
+    "source": "Microsoft Defender for Cloud Apps",
+    "tactic": "Persistence",
+    "technique": "Account Access Removal",
+    "entity": "Azure AD App: DocuPreview",
+    "timestamp": "2026-06-02T06:58:00Z",
+    "mitre_id": "T1531",
+    "description": "A newly registered application requested tenant-wide mail permissions after being consented by a user outside the approved publisher list.",
+    "evidence": [
+      "Application created by external user invite",
+      "Requested scopes include Mail.Read, offline_access, User.Read",
+      "Consent granted from unmanaged device",
+      "No verified publisher configured"
+    ],
+    "affected_assets": [
+      "Microsoft Graph",
+      "Azure AD App: DocuPreview",
+      "lena.ortiz@contoso.com"
+    ],
+    "recommended_actions": [
+      "Revoke OAuth consent grant",
+      "Disable application service principal",
+      "Review mailbox access audit logs",
+      "Enforce admin consent workflow"
+    ],
+    "confidence": 86,
+    "risk_score": 87
+  },
+  {
+    "id": "ALRT-2026-0004",
+    "title": "Multiple failed VPN attempts followed by successful login",
+    "severity": "Medium",
+    "status": "Triaged",
+    "source": "Palo Alto GlobalProtect",
+    "tactic": "Initial Access",
+    "technique": "External Remote Services",
+    "entity": "dmitri.volkov",
+    "timestamp": "2026-06-02T05:31:00Z",
+    "mitre_id": "T1133",
+    "description": "A user account had 27 failed VPN login attempts from three countries before a successful login using the same client version.",
+    "evidence": [
+      "Failed attempts from 45.83.64.21, 185.199.110.14, and 91.240.118.8",
+      "Successful login from 45.83.64.21 after password spray pattern",
+      "No MFA fatigue prompts reported",
+      "User does not normally authenticate outside Eastern Europe"
+    ],
+    "affected_assets": [
+      "VPN Gateway",
+      "dmitri.volkov",
+      "CORP-NET"
+    ],
+    "recommended_actions": [
+      "Force password reset",
+      "Review MFA challenge logs",
+      "Block source IP addresses",
+      "Validate user activity during VPN session"
+    ],
+    "confidence": 72,
+    "risk_score": 64
+  },
+  {
+    "id": "ALRT-2026-0005",
+    "title": "Rare PowerShell encoded command on developer workstation",
+    "severity": "Medium",
+    "status": "New",
+    "source": "Microsoft Sentinel Analytics",
+    "tactic": "Execution",
+    "technique": "Command and Scripting Interpreter",
+    "entity": "DEV-WS-118",
+    "timestamp": "2026-06-01T23:47:00Z",
+    "mitre_id": "T1059",
+    "description": "An encoded PowerShell command ran from a temporary directory on a developer workstation shortly after a browser download.",
+    "evidence": [
+      "powershell.exe -EncodedCommand observed with 1,204 byte payload",
+      "Parent process chrome.exe downloaded build-helper.zip",
+      "Script contacted raw.githubusercontent.example path",
+      "No lateral movement observed after execution"
+    ],
+    "affected_assets": [
+      "DEV-WS-118",
+      "User: priya.narayan"
+    ],
+    "recommended_actions": [
+      "Decode and review PowerShell payload",
+      "Check downloaded archive reputation",
+      "Run endpoint antivirus scan",
+      "Hunt for same command line across fleet"
+    ],
+    "confidence": 68,
+    "risk_score": 58
+  },
+  {
+    "id": "ALRT-2026-0006",
+    "title": "Blocked malware attachment delivered to executive mailbox",
+    "severity": "Low",
+    "status": "Closed",
+    "source": "Microsoft Defender for Office 365",
+    "tactic": "Initial Access",
+    "technique": "Phishing",
+    "entity": "ceo@contoso.com",
+    "timestamp": "2026-06-01T21:22:00Z",
+    "mitre_id": "T1566",
+    "description": "A phishing email with a known malware attachment was blocked before delivery to an executive mailbox.",
+    "evidence": [
+      "Attachment hash matched known malware signature",
+      "Safe Attachments detonated payload and blocked delivery",
+      "No user click activity recorded",
+      "Sender domain failed DMARC alignment"
+    ],
+    "affected_assets": [
+      "Exchange Online",
+      "ceo@contoso.com"
+    ],
+    "recommended_actions": [
+      "Verify no similar messages bypassed protection",
+      "Submit sender indicators to block list",
+      "Keep alert closed if no delivery found"
+    ],
+    "confidence": 96,
+    "risk_score": 22
+  }
+]

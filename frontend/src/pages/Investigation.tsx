@@ -1,0 +1,103 @@
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { ArrowLeft, Network, Radar } from "lucide-react";
+
+import { getAlert, getInvestigation } from "../api/client";
+import { KqlPanel } from "../components/KqlPanel";
+import { SeverityBadge } from "../components/SeverityBadge";
+import type { Alert, Investigation as InvestigationType } from "../types";
+
+export function Investigation() {
+  const { alertId = "" } = useParams();
+  const [alert, setAlert] = useState<Alert>();
+  const [investigation, setInvestigation] = useState<InvestigationType>();
+  const [error, setError] = useState<string>();
+
+  useEffect(() => {
+    if (!alertId) {
+      return;
+    }
+
+    Promise.all([getAlert(alertId), getInvestigation(alertId)])
+      .then(([alertPayload, investigationPayload]) => {
+        setAlert(alertPayload);
+        setInvestigation(investigationPayload);
+      })
+      .catch((err) => setError(err instanceof Error ? err.message : "Unable to load investigation"));
+  }, [alertId]);
+
+  if (error) {
+    return <main className="page"><div className="error-banner">{error}</div></main>;
+  }
+
+  if (!alert || !investigation) {
+    return <main className="page"><div className="panel skeleton">Loading investigation...</div></main>;
+  }
+
+  return (
+    <main className="page investigation-page">
+      <Link to={`/alerts/${alert.id}`} className="back-link">
+        <ArrowLeft size={16} />
+        Back to alert
+      </Link>
+
+      <section className="detail-hero">
+        <div>
+          <SeverityBadge severity={alert.severity} />
+          <h1>Investigation: {alert.id}</h1>
+          <p>{alert.title}</p>
+        </div>
+        <div className="entity-chip">
+          <Network size={18} />
+          {alert.entity}
+        </div>
+      </section>
+
+      <section className="investigation-grid">
+        <div className="panel timeline-panel">
+          <div className="panel-header">
+            <div>
+              <p>Investigation timeline</p>
+              <h2>Signal progression</h2>
+            </div>
+            <Radar size={24} />
+          </div>
+
+          <div className="timeline">
+            {investigation.timeline.map((event) => (
+              <article key={`${event.time}-${event.activity}`}>
+                <span>{event.time}</span>
+                <div>
+                  <strong>{event.activity}</strong>
+                  <p>{event.signal}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div className="panel">
+          <div className="panel-header">
+            <div>
+              <p>Entities</p>
+              <h2>Scope and assets</h2>
+            </div>
+          </div>
+          <div className="entity-list">
+            {investigation.entities.map((entity) => (
+              <span key={entity}>{entity}</span>
+            ))}
+          </div>
+          <h3>Playbook steps</h3>
+          <ul className="signal-list">
+            {investigation.playbook_steps.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <KqlPanel alertId={alert.id} />
+    </main>
+  );
+}
