@@ -52,6 +52,24 @@ def test_generate_kql_for_alert() -> None:
     assert "ALRT-2026-0002" in payload["title"]
 
 
+def test_kql_copilot_generates_investigation_response() -> None:
+    response = client.post(
+        "/api/kql-copilot",
+        json={
+            "alert_id": "ALRT-2026-0001",
+            "investigation_request": "Find mailbox forwarding rule changes for this user",
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["data_source"] == "OfficeActivity"
+    assert "OfficeActivity" in payload["query"]
+    assert "amaya.reed@contoso.com" in payload["query"]
+    assert "ALRT-2026-0001" in payload["explanation"]
+    assert len(payload["investigation_steps"]) >= 3
+
+
 def test_submit_verdict() -> None:
     response = client.post(
         "/api/verdicts",

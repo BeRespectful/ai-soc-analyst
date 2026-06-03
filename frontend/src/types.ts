@@ -59,6 +59,13 @@ export interface KqlQuery {
   query: string;
 }
 
+export interface KqlCopilotResponse {
+  query: string;
+  explanation: string;
+  data_source: string;
+  investigation_steps: string[];
+}
+
 export interface VerdictResponse {
   alert_id: string;
   verdict: Verdict;

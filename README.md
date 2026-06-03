@@ -8,6 +8,7 @@ First version of an AI-assisted SOC Analyst platform for alert triage, investiga
 - Security alerts table with Low, Medium, High, and Critical severities
 - Alert details page with metadata, evidence, MITRE mapping, and AI assessment
 - Investigation page with timeline, scoped entities, playbook steps, and KQL generation
+- KQL Copilot for natural language investigation requests with query explanations
 - AI analysis panel with summary, likely attack path, recommendations, and confidence
 - Verdict panel for True Positive, False Positive, and Suspicious dispositions
 - FastAPI backend with sample alert dataset and deterministic analysis helpers
@@ -66,6 +67,7 @@ The UI will be available at `http://127.0.0.1:5173` and proxies `/api` requests 
 - `GET /api/alerts/{alert_id}/investigation`
 - `GET /api/alerts/{alert_id}/analysis`
 - `POST /api/kql/generate`
+- `POST /api/kql-copilot`
 - `POST /api/verdicts`
 
 ## Validation
