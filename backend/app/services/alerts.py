@@ -11,6 +11,8 @@ from app.models.schemas import (
     AlertStatus,
     AlertSummary,
     Investigation,
+    KqlCopilotRequest,
+    KqlCopilotResponse,
     KqlGenerationRequest,
     KqlQuery,
     Severity,
@@ -159,6 +161,84 @@ SecurityAlert
             "technique, and high-value indicators to pivot across Sentinel tables."
         ),
         query=query,
+    )
+
+
+def generate_kql_copilot(request: KqlCopilotRequest) -> KqlCopilotResponse:
+    alert = get_alert(request.alert_id) if request.alert_id else None
+    prompt = request.investigation_request.strip()
+    prompt_lower = prompt.lower()
+
+    if any(term in prompt_lower for term in ("mail", "inbox", "forward", "rule", "exchange")):
+        data_source = "OfficeActivity"
+        focus_filter = "UserId =~ alertEntity or Operation has_any ('New-InboxRule', 'Set-InboxRule')"
+        projected_fields = "UserId, Operation, ClientIP, OfficeWorkload, Parameters"
+    elif any(term in prompt_lower for term in ("sign-in", "signin", "identity", "mfa", "user")):
+        data_source = "SigninLogs"
+        focus_filter = (
+            "UserPrincipalName =~ alertEntity or "
+            "IPAddress has_any ('203.0.113.84', '198.51.100.18')"
+        )
+        projected_fields = "UserPrincipalName, IPAddress, AppDisplayName, ResultType, LocationDetails"
+    elif any(term in prompt_lower for term in ("process", "device", "host", "powershell", "endpoint")):
+        data_source = "DeviceProcessEvents"
+        focus_filter = (
+            "DeviceName =~ alertEntity or AccountName =~ alertEntity or "
+            "ProcessCommandLine has_any ('EncodedCommand', 'vssadmin', 'New-InboxRule')"
+        )
+        projected_fields = "DeviceName, AccountName, FileName, ProcessCommandLine, InitiatingProcessFileName"
+    else:
+        data_source = "SecurityAlert"
+        focus_filter = "Entities has alertEntity or AlertName has_any (alertTechnique, alertTactic)"
+        projected_fields = "AlertName, ProviderName, Tactics, Techniques, Entities"
+
+    entity = alert.entity if alert else "*"
+    technique = alert.technique if alert else "related activity"
+    tactic = alert.tactic if alert else "investigation"
+    entity_literal = entity.replace("'", "\\'")
+    technique_literal = technique.replace("'", "\\'")
+    tactic_literal = tactic.replace("'", "\\'")
+    prompt_literal = prompt.replace("'", "\\'")
+
+    query = f"""let alertEntity = '{entity_literal}';
+let alertTechnique = '{technique_literal}';
+let alertTactic = '{tactic_literal}';
+let investigationRequest = '{prompt_literal}';
+let lookback = 24h;
+{data_source}
+| where TimeGenerated > ago(lookback)
+| where {focus_filter}
+| extend InvestigationRequest = investigationRequest
+| project TimeGenerated, InvestigationRequest, {projected_fields}
+| order by TimeGenerated desc"""
+
+    if alert:
+        explanation = (
+            f"Generated a {data_source} hunt for {alert.id} using {alert.entity}, "
+            f"{alert.technique}, and the analyst request: {prompt}."
+        )
+        investigation_steps = [
+            f"Run the query to validate {alert.entity} activity across the last 24 hours.",
+            f"Pivot on any matching {data_source} records that align to {alert.mitre_id}.",
+            "Compare source IPs, devices, and operations against the alert evidence.",
+            "Escalate or tune the alert based on confirmed malicious or benign patterns.",
+        ]
+    else:
+        explanation = (
+            f"Generated a {data_source} hunt from the analyst request: {prompt}."
+        )
+        investigation_steps = [
+            "Run the query and review the newest matching records first.",
+            "Pivot on high-risk users, devices, IP addresses, or operations in the results.",
+            "Expand the lookback window if the first pass returns sparse evidence.",
+            "Document the findings and convert useful pivots into follow-up hunts.",
+        ]
+
+    return KqlCopilotResponse(
+        query=query,
+        explanation=explanation,
+        data_source=data_source,
+        investigation_steps=investigation_steps,
     )
 
 

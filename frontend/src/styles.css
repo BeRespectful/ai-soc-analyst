@@ -419,6 +419,7 @@ td,
 }
 
 .ai-panel,
+.kql-copilot-panel,
 .kql-panel,
 .verdict-panel {
   margin-top: 1rem;
@@ -459,6 +460,7 @@ td,
 
 .split-list > div,
 .hypothesis,
+.copilot-result,
 .query-result,
 .verdict-response {
   padding: 1rem;
@@ -543,8 +545,49 @@ textarea:focus {
 }
 
 .kql-panel .primary-button,
+.kql-copilot-panel .primary-button,
 .verdict-panel .primary-button {
   margin-top: 0.85rem;
+}
+
+.copilot-result {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.copilot-meta,
+.copilot-steps {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.copilot-meta span,
+.copilot-steps span {
+  color: #8aa4c3;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.copilot-meta p,
+.copilot-steps ol {
+  margin: 0;
+  color: #a7b8cc;
+  line-height: 1.55;
+}
+
+.copilot-steps,
+.copilot-meta:nth-of-type(2),
+.copilot-result pre {
+  grid-column: 1 / -1;
+}
+
+.copilot-result .ghost-button {
+  grid-column: 2;
+  justify-self: end;
 }
 
 .query-result {

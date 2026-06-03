@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Network, Radar } from "lucide-react";
 
 import { getAlert, getInvestigation } from "../api/client";
+import { KqlCopilotPanel } from "../components/KqlCopilotPanel";
 import { KqlPanel } from "../components/KqlPanel";
 import { SeverityBadge } from "../components/SeverityBadge";
 import type { Alert, Investigation as InvestigationType } from "../types";
@@ -97,6 +98,7 @@ export function Investigation() {
         </div>
       </section>
 
+      <KqlCopilotPanel alertId={alert.id} />
       <KqlPanel alertId={alert.id} />
     </main>
   );
