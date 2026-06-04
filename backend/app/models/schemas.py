@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field
 
 Severity = Literal["Low", "Medium", "High", "Critical"]
 AlertStatus = Literal["New", "In Progress", "Triaged", "Closed"]
+AlertWorkflowStatus = Literal["New", "In Progress", "Closed"]
 Verdict = Literal["True Positive", "False Positive", "Suspicious"]
 
 
@@ -25,6 +26,7 @@ class Alert(BaseModel):
     recommended_actions: list[str]
     confidence: int = Field(ge=0, le=100)
     risk_score: int = Field(ge=0, le=100)
+    analyst_notes: str = ""
 
 
 class AlertSummary(BaseModel):
@@ -81,6 +83,26 @@ class KqlQuery(BaseModel):
     title: str
     description: str
     query: str
+
+
+class KqlCopilotRequest(BaseModel):
+    investigation_request: str = Field(min_length=3, max_length=500)
+    alert_id: str | None = None
+
+
+class KqlCopilotResponse(BaseModel):
+    query: str
+    explanation: str
+    data_source: str
+    investigation_steps: list[str]
+
+
+class AlertStatusUpdate(BaseModel):
+    status: AlertWorkflowStatus
+
+
+class InvestigationNotesUpdate(BaseModel):
+    notes: str = Field(default="", max_length=3000)
 
 
 class VerdictRequest(BaseModel):

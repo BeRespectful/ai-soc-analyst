@@ -1,5 +1,6 @@
 export type Severity = "Low" | "Medium" | "High" | "Critical";
 export type AlertStatus = "New" | "In Progress" | "Triaged" | "Closed";
+export type AlertWorkflowStatus = "New" | "In Progress" | "Closed";
 export type Verdict = "True Positive" | "False Positive" | "Suspicious";
 
 export interface AlertSummary {
@@ -22,6 +23,7 @@ export interface Alert extends AlertSummary {
   affected_assets: string[];
   recommended_actions: string[];
   confidence: number;
+  analyst_notes: string;
 }
 
 export interface AlertCollection {
@@ -57,6 +59,13 @@ export interface KqlQuery {
   title: string;
   description: string;
   query: string;
+}
+
+export interface KqlCopilotResponse {
+  query: string;
+  explanation: string;
+  data_source: string;
+  investigation_steps: string[];
 }
 
 export interface VerdictResponse {

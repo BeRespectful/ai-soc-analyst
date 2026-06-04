@@ -6,7 +6,11 @@ from app.models.schemas import (
     Alert,
     AlertCollection,
     AlertStatus,
+    AlertStatusUpdate,
     Investigation,
+    InvestigationNotesUpdate,
+    KqlCopilotRequest,
+    KqlCopilotResponse,
     KqlGenerationRequest,
     KqlQuery,
     Severity,
@@ -16,10 +20,13 @@ from app.models.schemas import (
 from app.services.alerts import (
     build_ai_analysis,
     build_investigation,
+    generate_kql_copilot,
     generate_kql,
     get_alert,
     list_alerts,
     submit_verdict,
+    update_alert_status,
+    update_investigation_notes,
 )
 
 
@@ -59,6 +66,16 @@ def alert_details(alert_id: str) -> Alert:
     return get_alert(alert_id)
 
 
+@app.patch("/api/alerts/{alert_id}/status", response_model=Alert)
+def alert_status_update(alert_id: str, request: AlertStatusUpdate) -> Alert:
+    return update_alert_status(alert_id, request)
+
+
+@app.patch("/api/alerts/{alert_id}/notes", response_model=Alert)
+def investigation_notes_update(alert_id: str, request: InvestigationNotesUpdate) -> Alert:
+    return update_investigation_notes(alert_id, request)
+
+
 @app.get("/api/alerts/{alert_id}/investigation", response_model=Investigation)
 def investigation(alert_id: str) -> Investigation:
     return build_investigation(alert_id)
@@ -72,6 +89,11 @@ def ai_analysis(alert_id: str) -> AiAnalysis:
 @app.post("/api/kql/generate", response_model=KqlQuery)
 def kql_generation(request: KqlGenerationRequest) -> KqlQuery:
     return generate_kql(request)
+
+
+@app.post("/api/kql-copilot", response_model=KqlCopilotResponse)
+def kql_copilot(request: KqlCopilotRequest) -> KqlCopilotResponse:
+    return generate_kql_copilot(request)
 
 
 @app.post("/api/verdicts", response_model=VerdictResponse)

@@ -31,12 +31,20 @@ export function AlertTable({ alerts }: AlertTableProps) {
             </tr>
           </thead>
           <tbody>
+            {alerts.length === 0 && (
+              <tr>
+                <td colSpan={6} className="empty-table-cell">
+                  No alerts match the current filters.
+                </td>
+              </tr>
+            )}
             {alerts.map((alert) => (
               <tr key={alert.id}>
                 <td>
                   <Link to={`/alerts/${alert.id}`} className="alert-link">
                     <strong>{alert.title}</strong>
                     <span>{alert.id} &middot; {alert.tactic}</span>
+                    <span className="alert-status-inline">{alert.status}</span>
                   </Link>
                 </td>
                 <td>

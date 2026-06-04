@@ -2,7 +2,9 @@ import type {
   AiAnalysis,
   Alert,
   AlertCollection,
+  AlertWorkflowStatus,
   Investigation,
+  KqlCopilotResponse,
   KqlQuery,
   Verdict,
   VerdictResponse,
@@ -42,10 +44,40 @@ export function getAiAnalysis(alertId: string): Promise<AiAnalysis> {
   return request<AiAnalysis>(`/api/alerts/${alertId}/analysis`);
 }
 
+export function updateAlertStatus(
+  alertId: string,
+  status: AlertWorkflowStatus,
+): Promise<Alert> {
+  return request<Alert>(`/api/alerts/${alertId}/status`, {
+    method: "PATCH",
+    body: JSON.stringify({ status }),
+  });
+}
+
+export function updateInvestigationNotes(alertId: string, notes: string): Promise<Alert> {
+  return request<Alert>(`/api/alerts/${alertId}/notes`, {
+    method: "PATCH",
+    body: JSON.stringify({ notes }),
+  });
+}
+
 export function generateKql(alertId: string, objective: string): Promise<KqlQuery> {
   return request<KqlQuery>("/api/kql/generate", {
     method: "POST",
     body: JSON.stringify({ alert_id: alertId, objective }),
+  });
+}
+
+export function generateKqlCopilot(
+  investigationRequest: string,
+  alertId?: string,
+): Promise<KqlCopilotResponse> {
+  return request<KqlCopilotResponse>("/api/kql-copilot", {
+    method: "POST",
+    body: JSON.stringify({
+      alert_id: alertId,
+      investigation_request: investigationRequest,
+    }),
   });
 }
 
