@@ -31,6 +31,13 @@ export function AlertTable({ alerts }: AlertTableProps) {
             </tr>
           </thead>
           <tbody>
+            {alerts.length === 0 && (
+              <tr>
+                <td colSpan={6} className="empty-table-cell">
+                  No alerts match the current filters.
+                </td>
+              </tr>
+            )}
             {alerts.map((alert) => (
               <tr key={alert.id}>
                 <td>

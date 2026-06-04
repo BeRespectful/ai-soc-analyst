@@ -6,6 +6,7 @@ First version of an AI-assisted SOC Analyst platform for alert triage, investiga
 
 - Dark Microsoft Sentinel inspired React dashboard
 - Security alerts table with Low, Medium, High, and Critical severities
+- Dashboard search and filters by alert metadata, severity, and status
 - Alert details page with metadata, evidence, MITRE mapping, and AI assessment
 - Investigation page with timeline, scoped entities, playbook steps, and KQL generation
 - KQL Copilot for natural language investigation requests with query explanations
