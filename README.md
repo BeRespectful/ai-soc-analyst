@@ -5,6 +5,7 @@ First version of an AI-assisted SOC Analyst platform for alert triage, investiga
 ## Features
 
 - Dark Microsoft Sentinel inspired React dashboard
+- SOC dashboard metrics and alert distribution charts
 - Security alerts table with Low, Medium, High, and Critical severities
 - Dashboard search and filters by alert metadata, severity, and status
 - Alert details page with metadata, evidence, MITRE mapping, and AI assessment
