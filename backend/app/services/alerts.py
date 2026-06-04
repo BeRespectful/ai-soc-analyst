@@ -9,6 +9,7 @@ from app.models.schemas import (
     Alert,
     AlertCollection,
     AlertStatus,
+    AlertStatusUpdate,
     AlertSummary,
     Investigation,
     KqlGenerationRequest,
@@ -75,6 +76,12 @@ def get_alert(alert_id: str) -> Alert:
         status_code=status.HTTP_404_NOT_FOUND,
         detail=f"Alert {alert_id} was not found",
     )
+
+
+def update_alert_status(alert_id: str, request: AlertStatusUpdate) -> Alert:
+    alert = get_alert(alert_id)
+    alert.status = request.status
+    return alert
 
 
 def build_investigation(alert_id: str) -> Investigation:

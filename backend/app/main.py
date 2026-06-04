@@ -6,6 +6,7 @@ from app.models.schemas import (
     Alert,
     AlertCollection,
     AlertStatus,
+    AlertStatusUpdate,
     Investigation,
     KqlGenerationRequest,
     KqlQuery,
@@ -20,6 +21,7 @@ from app.services.alerts import (
     get_alert,
     list_alerts,
     submit_verdict,
+    update_alert_status,
 )
 
 
@@ -57,6 +59,11 @@ def alerts(
 @app.get("/api/alerts/{alert_id}", response_model=Alert)
 def alert_details(alert_id: str) -> Alert:
     return get_alert(alert_id)
+
+
+@app.patch("/api/alerts/{alert_id}/status", response_model=Alert)
+def alert_status_update(alert_id: str, request: AlertStatusUpdate) -> Alert:
+    return update_alert_status(alert_id, request)
 
 
 @app.get("/api/alerts/{alert_id}/investigation", response_model=Investigation)
