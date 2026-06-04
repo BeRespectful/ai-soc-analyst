@@ -544,6 +544,14 @@ td,
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.mitre-reference-grid > div {
+  min-width: 0;
+}
+
+.mitre-reference-grid li {
+  overflow-wrap: anywhere;
+}
+
 .timeline {
   display: grid;
   gap: 1rem;
