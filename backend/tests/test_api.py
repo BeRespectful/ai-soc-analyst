@@ -70,6 +70,42 @@ def test_kql_copilot_generates_investigation_response() -> None:
     assert len(payload["investigation_steps"]) >= 3
 
 
+def test_update_alert_status_updates_detail_and_dashboard() -> None:
+    alert_id = "ALRT-2026-0001"
+    in_progress_response = client.patch(
+        f"/api/alerts/{alert_id}/status",
+        json={"status": "In Progress"},
+    )
+    closed_response = client.patch(
+        f"/api/alerts/{alert_id}/status",
+        json={"status": "Closed"},
+    )
+    detail_response = client.get(f"/api/alerts/{alert_id}")
+    dashboard_response = client.get("/api/alerts")
+
+    assert in_progress_response.status_code == 200
+    assert in_progress_response.json()["status"] == "In Progress"
+    assert closed_response.status_code == 200
+    assert closed_response.json()["status"] == "Closed"
+    assert detail_response.json()["status"] == "Closed"
+
+    dashboard_alert = next(
+        alert for alert in dashboard_response.json()["alerts"] if alert["id"] == alert_id
+    )
+    assert dashboard_alert["status"] == "Closed"
+
+    client.patch(f"/api/alerts/{alert_id}/status", json={"status": "New"})
+
+
+def test_update_alert_status_rejects_unknown_status() -> None:
+    response = client.patch(
+        "/api/alerts/ALRT-2026-0001/status",
+        json={"status": "Triaged"},
+    )
+
+    assert response.status_code == 422
+
+
 def test_submit_verdict() -> None:
     response = client.post(
         "/api/verdicts",

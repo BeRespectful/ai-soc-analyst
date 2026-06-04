@@ -1,5 +1,6 @@
 export type Severity = "Low" | "Medium" | "High" | "Critical";
 export type AlertStatus = "New" | "In Progress" | "Triaged" | "Closed";
+export type AlertWorkflowStatus = "New" | "In Progress" | "Closed";
 export type Verdict = "True Positive" | "False Positive" | "Suspicious";
 
 export interface AlertSummary {
