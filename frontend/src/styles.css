@@ -552,6 +552,17 @@ td,
   overflow-wrap: anywhere;
 }
 
+.mitre-reference-grid .signal-list {
+  display: block;
+  padding-left: 1.35rem;
+}
+
+.mitre-reference-grid .signal-list li {
+  margin-bottom: 0.55rem;
+  padding-left: 0.15rem;
+  list-style-position: outside;
+}
+
 .timeline {
   display: grid;
   gap: 1rem;
