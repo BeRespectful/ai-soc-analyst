@@ -559,8 +559,14 @@ textarea {
   border-radius: 0.9rem;
   padding: 0.9rem;
   color: #f4f7fb;
+  color-scheme: dark;
   background: rgba(3, 8, 17, 0.75);
   outline: none;
+}
+
+input::placeholder {
+  color: #8aa4c3;
+  opacity: 1;
 }
 
 textarea {
@@ -569,6 +575,16 @@ textarea {
 
 select {
   appearance: none;
+  padding-right: 2.25rem;
+  background:
+    linear-gradient(45deg, transparent 50%, #72d7ff 50%) calc(100% - 1.15rem) 50% / 0.45rem 0.45rem no-repeat,
+    linear-gradient(135deg, #72d7ff 50%, transparent 50%) calc(100% - 0.85rem) 50% / 0.45rem 0.45rem no-repeat,
+    rgba(3, 8, 17, 0.9);
+}
+
+select option {
+  color: #f4f7fb;
+  background: #071120;
 }
 
 input:focus,
