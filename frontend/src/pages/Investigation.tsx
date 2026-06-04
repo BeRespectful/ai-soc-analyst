@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, Network, Radar } from "lucide-react";
+import { ArrowLeft, FileText, Network, Radar } from "lucide-react";
 
-import { getAlert, getInvestigation } from "../api/client";
+import { getAlert, getInvestigation, updateInvestigationNotes } from "../api/client";
 import { AlertStatusSelect } from "../components/AlertStatusSelect";
 import { KqlCopilotPanel } from "../components/KqlCopilotPanel";
 import { KqlPanel } from "../components/KqlPanel";
@@ -13,6 +13,10 @@ export function Investigation() {
   const { alertId = "" } = useParams();
   const [alert, setAlert] = useState<Alert>();
   const [investigation, setInvestigation] = useState<InvestigationType>();
+  const [notes, setNotes] = useState("");
+  const [notesStatus, setNotesStatus] = useState<string>();
+  const [notesError, setNotesError] = useState<string>();
+  const [savingNotes, setSavingNotes] = useState(false);
   const [error, setError] = useState<string>();
 
   useEffect(() => {
@@ -24,9 +28,32 @@ export function Investigation() {
       .then(([alertPayload, investigationPayload]) => {
         setAlert(alertPayload);
         setInvestigation(investigationPayload);
+        setNotes(alertPayload.analyst_notes);
+        setNotesStatus(undefined);
+        setNotesError(undefined);
       })
       .catch((err) => setError(err instanceof Error ? err.message : "Unable to load investigation"));
   }, [alertId]);
+
+  async function handleSaveNotes() {
+    if (!alert) {
+      return;
+    }
+
+    setSavingNotes(true);
+    setNotesStatus(undefined);
+    setNotesError(undefined);
+    try {
+      const updatedAlert = await updateInvestigationNotes(alert.id, notes);
+      setAlert(updatedAlert);
+      setNotes(updatedAlert.analyst_notes);
+      setNotesStatus("Notes saved");
+    } catch (err) {
+      setNotesError(err instanceof Error ? err.message : "Unable to save notes");
+    } finally {
+      setSavingNotes(false);
+    }
+  }
 
   if (error) {
     return <main className="page"><div className="error-banner">{error}</div></main>;
@@ -107,6 +134,33 @@ export function Investigation() {
       </section>
 
       <KqlCopilotPanel alertId={alert.id} />
+
+      <section className="panel notes-panel">
+        <div className="panel-header">
+          <div>
+            <p>Analyst notes</p>
+            <h2>Investigation journal</h2>
+          </div>
+          <FileText size={24} />
+        </div>
+        <label className="field">
+          Notes for this alert
+          <textarea
+            value={notes}
+            onChange={(event) => setNotes(event.target.value)}
+            placeholder="Document pivots, evidence, owner feedback, and next actions."
+            rows={5}
+          />
+        </label>
+        <div className="notes-actions">
+          <button className="primary-button" onClick={handleSaveNotes} disabled={savingNotes}>
+            {savingNotes ? "Saving..." : "Save notes"}
+          </button>
+          {notesStatus && <span className="success-text">{notesStatus}</span>}
+          {notesError && <span className="error-text">{notesError}</span>}
+        </div>
+      </section>
+
       <KqlPanel alertId={alert.id} />
     </main>
   );

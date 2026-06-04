@@ -445,6 +445,7 @@ td,
 .ai-panel,
 .kql-copilot-panel,
 .kql-panel,
+.notes-panel,
 .verdict-panel {
   margin-top: 1rem;
 }
@@ -599,6 +600,7 @@ textarea:focus {
 
 .kql-panel .primary-button,
 .kql-copilot-panel .primary-button,
+.notes-panel .primary-button,
 .verdict-panel .primary-button {
   margin-top: 0.85rem;
 }
@@ -641,6 +643,13 @@ textarea:focus {
 .copilot-result .ghost-button {
   grid-column: 2;
   justify-self: end;
+}
+
+.notes-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .query-result {
@@ -711,6 +720,11 @@ pre {
 .error-banner,
 .error-text {
   color: #fecdd3;
+}
+
+.success-text {
+  color: #86efac;
+  font-weight: 700;
 }
 
 .error-banner {

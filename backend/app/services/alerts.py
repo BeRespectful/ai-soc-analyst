@@ -12,6 +12,7 @@ from app.models.schemas import (
     AlertStatusUpdate,
     AlertSummary,
     Investigation,
+    InvestigationNotesUpdate,
     KqlCopilotRequest,
     KqlCopilotResponse,
     KqlGenerationRequest,
@@ -86,6 +87,12 @@ def update_alert_status(alert_id: str, request: AlertStatusUpdate) -> Alert:
     return alert
 
 
+def update_investigation_notes(alert_id: str, request: InvestigationNotesUpdate) -> Alert:
+    alert = get_alert(alert_id)
+    alert.analyst_notes = request.notes
+    return alert
+
+
 def build_investigation(alert_id: str) -> Investigation:
     alert = get_alert(alert_id)
     return Investigation(
@@ -142,7 +149,7 @@ def build_ai_analysis(alert_id: str) -> AiAnalysis:
 
 def generate_kql(request: KqlGenerationRequest) -> KqlQuery:
     alert = get_alert(request.alert_id)
-    entity_literal = alert.entity.replace("'", "\\'")
+    entity_literal = alert.entity.replace("'", "\'")
     title = f"Hunt related {alert.tactic.lower()} activity for {alert.id}"
     query = f"""let alertEntity = '{entity_literal}';
 let lookback = 24h;
@@ -202,10 +209,10 @@ def generate_kql_copilot(request: KqlCopilotRequest) -> KqlCopilotResponse:
     entity = alert.entity if alert else "*"
     technique = alert.technique if alert else "related activity"
     tactic = alert.tactic if alert else "investigation"
-    entity_literal = entity.replace("'", "\\'")
-    technique_literal = technique.replace("'", "\\'")
-    tactic_literal = tactic.replace("'", "\\'")
-    prompt_literal = prompt.replace("'", "\\'")
+    entity_literal = entity.replace("'", "\'")
+    technique_literal = technique.replace("'", "\'")
+    tactic_literal = tactic.replace("'", "\'")
+    prompt_literal = prompt.replace("'", "\'")
 
     query = f"""let alertEntity = '{entity_literal}';
 let alertTechnique = '{technique_literal}';

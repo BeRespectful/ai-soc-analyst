@@ -54,6 +54,13 @@ export function updateAlertStatus(
   });
 }
 
+export function updateInvestigationNotes(alertId: string, notes: string): Promise<Alert> {
+  return request<Alert>(`/api/alerts/${alertId}/notes`, {
+    method: "PATCH",
+    body: JSON.stringify({ notes }),
+  });
+}
+
 export function generateKql(alertId: string, objective: string): Promise<KqlQuery> {
   return request<KqlQuery>("/api/kql/generate", {
     method: "POST",

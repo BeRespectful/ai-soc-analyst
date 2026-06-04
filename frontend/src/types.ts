@@ -23,6 +23,7 @@ export interface Alert extends AlertSummary {
   affected_assets: string[];
   recommended_actions: string[];
   confidence: number;
+  analyst_notes: string;
 }
 
 export interface AlertCollection {

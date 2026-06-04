@@ -106,6 +106,34 @@ def test_update_alert_status_rejects_unknown_status() -> None:
     assert response.status_code == 422
 
 
+def test_update_investigation_notes_persists_on_alert() -> None:
+    alert_id = "ALRT-2026-0001"
+    notes = "Validated impossible travel and mailbox forwarding rule activity."
+
+    try:
+        update_response = client.patch(
+            f"/api/alerts/{alert_id}/notes",
+            json={"notes": notes},
+        )
+        detail_response = client.get(f"/api/alerts/{alert_id}")
+
+        assert update_response.status_code == 200
+        assert update_response.json()["analyst_notes"] == notes
+        assert detail_response.status_code == 200
+        assert detail_response.json()["analyst_notes"] == notes
+    finally:
+        client.patch(f"/api/alerts/{alert_id}/notes", json={"notes": ""})
+
+
+def test_update_investigation_notes_rejects_oversized_notes() -> None:
+    response = client.patch(
+        "/api/alerts/ALRT-2026-0001/notes",
+        json={"notes": "x" * 3001},
+    )
+
+    assert response.status_code == 422
+
+
 def test_submit_verdict() -> None:
     response = client.post(
         "/api/verdicts",
