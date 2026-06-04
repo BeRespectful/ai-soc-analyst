@@ -25,6 +25,7 @@ class Alert(BaseModel):
     recommended_actions: list[str]
     confidence: int = Field(ge=0, le=100)
     risk_score: int = Field(ge=0, le=100)
+    analyst_notes: str = ""
 
 
 class AlertSummary(BaseModel):
@@ -81,6 +82,10 @@ class KqlQuery(BaseModel):
     title: str
     description: str
     query: str
+
+
+class InvestigationNotesUpdate(BaseModel):
+    notes: str = Field(default="", max_length=3000)
 
 
 class VerdictRequest(BaseModel):

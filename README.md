@@ -63,6 +63,7 @@ The UI will be available at `http://127.0.0.1:5173` and proxies `/api` requests 
 - `GET /health`
 - `GET /api/alerts`
 - `GET /api/alerts/{alert_id}`
+- `PATCH /api/alerts/{alert_id}/notes`
 - `GET /api/alerts/{alert_id}/investigation`
 - `GET /api/alerts/{alert_id}/analysis`
 - `POST /api/kql/generate`

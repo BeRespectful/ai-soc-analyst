@@ -42,6 +42,13 @@ export function getAiAnalysis(alertId: string): Promise<AiAnalysis> {
   return request<AiAnalysis>(`/api/alerts/${alertId}/analysis`);
 }
 
+export function updateInvestigationNotes(alertId: string, notes: string): Promise<Alert> {
+  return request<Alert>(`/api/alerts/${alertId}/notes`, {
+    method: "PATCH",
+    body: JSON.stringify({ notes }),
+  });
+}
+
 export function generateKql(alertId: string, objective: string): Promise<KqlQuery> {
   return request<KqlQuery>("/api/kql/generate", {
     method: "POST",
