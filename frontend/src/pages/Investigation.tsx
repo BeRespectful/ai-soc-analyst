@@ -4,6 +4,7 @@ import { ArrowLeft, Network, Radar } from "lucide-react";
 
 import { getAlert, getInvestigation } from "../api/client";
 import { KqlPanel } from "../components/KqlPanel";
+import { MITREPanel } from "../components/MITREPanel";
 import { SeverityBadge } from "../components/SeverityBadge";
 import type { Alert, Investigation as InvestigationType } from "../types";
 
@@ -97,6 +98,7 @@ export function Investigation() {
         </div>
       </section>
 
+      <MITREPanel alert={alert} />
       <KqlPanel alertId={alert.id} />
     </main>
   );
