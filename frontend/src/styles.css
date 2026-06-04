@@ -425,6 +425,10 @@ td,
   margin-top: 1rem;
 }
 
+.ai-summary-panel {
+  display: flow-root;
+}
+
 .ai-summary-hero,
 .ai-summary {
   display: flex;
@@ -447,6 +451,7 @@ td,
 }
 
 .ai-summary-grid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
@@ -489,6 +494,8 @@ td,
 }
 
 .next-steps-card {
+  position: relative;
+  clear: both;
   margin-top: 1rem;
 }
 
