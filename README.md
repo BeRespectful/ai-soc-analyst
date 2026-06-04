@@ -8,6 +8,7 @@ First version of an AI-assisted SOC Analyst platform for alert triage, investiga
 - Security alerts table with Low, Medium, High, and Critical severities
 - Alert details page with metadata, evidence, MITRE mapping, and AI assessment
 - Investigation page with timeline, scoped entities, playbook steps, and KQL generation
+- Dedicated MITRE ATT&CK panel with technique context and analyst guidance
 - AI analysis panel with summary, likely attack path, recommendations, and confidence
 - Verdict panel for True Positive, False Positive, and Suspicious dispositions
 - FastAPI backend with sample alert dataset and deterministic analysis helpers
