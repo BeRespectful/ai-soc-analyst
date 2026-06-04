@@ -5,6 +5,7 @@ import { ArrowLeft, ExternalLink } from "lucide-react";
 import { getAiAnalysis, getAlert } from "../api/client";
 import { AiAnalysisPanel } from "../components/AiAnalysisPanel";
 import { AlertStatusSelect } from "../components/AlertStatusSelect";
+import { MITREPanel } from "../components/MITREPanel";
 import { SeverityBadge } from "../components/SeverityBadge";
 import { VerdictPanel } from "../components/VerdictPanel";
 import type { AiAnalysis, Alert } from "../types";
@@ -93,6 +94,7 @@ export function AlertDetails() {
         </div>
       </section>
 
+      <MITREPanel alert={alert} />
       <AiAnalysisPanel analysis={analysis} loading={!analysis} />
       <VerdictPanel alertId={alert.id} />
     </main>

@@ -6,6 +6,7 @@ import { getAlert, getInvestigation, updateInvestigationNotes } from "../api/cli
 import { AlertStatusSelect } from "../components/AlertStatusSelect";
 import { KqlCopilotPanel } from "../components/KqlCopilotPanel";
 import { KqlPanel } from "../components/KqlPanel";
+import { MITREPanel } from "../components/MITREPanel";
 import { SeverityBadge } from "../components/SeverityBadge";
 import type { Alert, Investigation as InvestigationType } from "../types";
 
@@ -134,6 +135,7 @@ export function Investigation() {
       </section>
 
       <KqlCopilotPanel alertId={alert.id} />
+      <MITREPanel alert={alert} />
 
       <section className="panel notes-panel">
         <div className="panel-header">
