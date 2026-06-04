@@ -83,6 +83,18 @@ class KqlQuery(BaseModel):
     query: str
 
 
+class KqlCopilotRequest(BaseModel):
+    investigation_request: str = Field(min_length=3, max_length=500)
+    alert_id: str | None = None
+
+
+class KqlCopilotResponse(BaseModel):
+    query: str
+    explanation: str
+    data_source: str
+    investigation_steps: list[str]
+
+
 class VerdictRequest(BaseModel):
     alert_id: str
     verdict: Verdict

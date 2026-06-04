@@ -3,6 +3,7 @@ import type {
   Alert,
   AlertCollection,
   Investigation,
+  KqlCopilotResponse,
   KqlQuery,
   Verdict,
   VerdictResponse,
@@ -46,6 +47,19 @@ export function generateKql(alertId: string, objective: string): Promise<KqlQuer
   return request<KqlQuery>("/api/kql/generate", {
     method: "POST",
     body: JSON.stringify({ alert_id: alertId, objective }),
+  });
+}
+
+export function generateKqlCopilot(
+  investigationRequest: string,
+  alertId?: string,
+): Promise<KqlCopilotResponse> {
+  return request<KqlCopilotResponse>("/api/kql-copilot", {
+    method: "POST",
+    body: JSON.stringify({
+      alert_id: alertId,
+      investigation_request: investigationRequest,
+    }),
   });
 }
 
