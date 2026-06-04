@@ -28,6 +28,7 @@ a {
 }
 
 button,
+select,
 textarea {
   font: inherit;
 }
@@ -198,6 +199,14 @@ button {
   line-height: 1.45;
 }
 
+.detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
 .stats-grid,
 .detail-grid,
 .investigation-grid {
@@ -307,6 +316,17 @@ th {
   gap: 0.25rem;
 }
 
+.alert-status-inline {
+  width: max-content;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 999px;
+  color: #d9f4ff;
+  background: rgba(148, 163, 184, 0.1);
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
 .alert-link span,
 td,
 .metadata-list dd,
@@ -314,6 +334,10 @@ td,
 .timeline p,
 .query-result p {
   color: #a7b8cc;
+}
+
+.alert-link .alert-status-inline {
+  color: #d9f4ff;
 }
 
 .severity-badge,
@@ -539,6 +563,35 @@ textarea {
 }
 
 textarea:focus {
+  border-color: rgba(62, 166, 255, 0.7);
+}
+
+.status-control {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 12rem;
+}
+
+.status-control label {
+  display: grid;
+  gap: 0.35rem;
+  color: #8aa4c3;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.status-control select {
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  color: #d9f4ff;
+  background: rgba(3, 8, 17, 0.86);
+  outline: none;
+}
+
+.status-control select:focus {
   border-color: rgba(62, 166, 255, 0.7);
 }
 

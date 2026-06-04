@@ -2,6 +2,7 @@ import type {
   AiAnalysis,
   Alert,
   AlertCollection,
+  AlertWorkflowStatus,
   Investigation,
   KqlQuery,
   Verdict,
@@ -40,6 +41,16 @@ export function getInvestigation(alertId: string): Promise<Investigation> {
 
 export function getAiAnalysis(alertId: string): Promise<AiAnalysis> {
   return request<AiAnalysis>(`/api/alerts/${alertId}/analysis`);
+}
+
+export function updateAlertStatus(
+  alertId: string,
+  status: AlertWorkflowStatus,
+): Promise<Alert> {
+  return request<Alert>(`/api/alerts/${alertId}/status`, {
+    method: "PATCH",
+    body: JSON.stringify({ status }),
+  });
 }
 
 export function generateKql(alertId: string, objective: string): Promise<KqlQuery> {

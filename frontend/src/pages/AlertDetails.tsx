@@ -4,6 +4,7 @@ import { ArrowLeft, ExternalLink } from "lucide-react";
 
 import { getAiAnalysis, getAlert } from "../api/client";
 import { AiAnalysisPanel } from "../components/AiAnalysisPanel";
+import { AlertStatusSelect } from "../components/AlertStatusSelect";
 import { SeverityBadge } from "../components/SeverityBadge";
 import { VerdictPanel } from "../components/VerdictPanel";
 import type { AiAnalysis, Alert } from "../types";
@@ -61,7 +62,11 @@ export function AlertDetails() {
               <p>Alert metadata</p>
               <h2>{alert.id}</h2>
             </div>
-            <span className="status-pill">{alert.status}</span>
+            <AlertStatusSelect
+              alertId={alert.id}
+              status={alert.status}
+              onStatusChange={setAlert}
+            />
           </div>
           <dl className="metadata-list">
             <div><dt>Source</dt><dd>{alert.source}</dd></div>

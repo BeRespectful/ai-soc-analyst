@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field
 
 Severity = Literal["Low", "Medium", "High", "Critical"]
 AlertStatus = Literal["New", "In Progress", "Triaged", "Closed"]
+AlertWorkflowStatus = Literal["New", "In Progress", "Closed"]
 Verdict = Literal["True Positive", "False Positive", "Suspicious"]
 
 
@@ -81,6 +82,10 @@ class KqlQuery(BaseModel):
     title: str
     description: str
     query: str
+
+
+class AlertStatusUpdate(BaseModel):
+    status: AlertWorkflowStatus
 
 
 class VerdictRequest(BaseModel):

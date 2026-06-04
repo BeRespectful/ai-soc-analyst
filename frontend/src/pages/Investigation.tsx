@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Network, Radar } from "lucide-react";
 
 import { getAlert, getInvestigation } from "../api/client";
+import { AlertStatusSelect } from "../components/AlertStatusSelect";
 import { KqlPanel } from "../components/KqlPanel";
 import { SeverityBadge } from "../components/SeverityBadge";
 import type { Alert, Investigation as InvestigationType } from "../types";
@@ -47,9 +48,16 @@ export function Investigation() {
           <h1>Investigation: {alert.id}</h1>
           <p>{alert.title}</p>
         </div>
-        <div className="entity-chip">
-          <Network size={18} />
-          {alert.entity}
+        <div className="detail-actions">
+          <div className="entity-chip">
+            <Network size={18} />
+            {alert.entity}
+          </div>
+          <AlertStatusSelect
+            alertId={alert.id}
+            status={alert.status}
+            onStatusChange={setAlert}
+          />
         </div>
       </section>
 
