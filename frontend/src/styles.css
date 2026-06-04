@@ -554,13 +554,21 @@ td,
 
 .mitre-reference-grid .signal-list {
   display: block;
-  padding-left: 1.35rem;
+  padding-left: 0;
+  list-style: none;
 }
 
 .mitre-reference-grid .signal-list li {
+  position: relative;
   margin-bottom: 0.55rem;
-  padding-left: 0.15rem;
-  list-style-position: outside;
+  padding-left: 1rem;
+}
+
+.mitre-reference-grid .signal-list li::before {
+  position: absolute;
+  left: 0;
+  color: #72d7ff;
+  content: "•";
 }
 
 .timeline {
