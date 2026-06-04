@@ -419,6 +419,7 @@ td,
 }
 
 .ai-panel,
+.incident-report-panel,
 .kql-panel,
 .verdict-panel {
   margin-top: 1rem;
@@ -459,6 +460,8 @@ td,
 
 .split-list > div,
 .hypothesis,
+.incident-report-output,
+.report-section,
 .query-result,
 .verdict-response {
   padding: 1rem;
@@ -479,6 +482,65 @@ td,
   margin: 0.4rem 0 0;
   color: #d9e7f7;
   line-height: 1.55;
+}
+
+.report-intro {
+  max-width: 820px;
+  margin: 0;
+  color: #a7b8cc;
+  line-height: 1.55;
+}
+
+.report-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.incident-report-output {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.report-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(62, 166, 255, 0.22);
+  border-radius: 1rem;
+  background: rgba(0, 120, 212, 0.12);
+}
+
+.report-title-row span {
+  color: #8aa4c3;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.report-title-row h3,
+.report-section h4 {
+  margin: 0.25rem 0 0;
+}
+
+.report-title-row strong {
+  color: #ff5d73;
+  font-size: 1.25rem;
+}
+
+.report-section {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.report-section pre {
+  white-space: pre-wrap;
 }
 
 .timeline {
@@ -543,6 +605,7 @@ textarea:focus {
 }
 
 .kql-panel .primary-button,
+.incident-report-panel .primary-button,
 .verdict-panel .primary-button {
   margin-top: 0.85rem;
 }
@@ -615,6 +678,11 @@ pre {
 .error-banner,
 .error-text {
   color: #fecdd3;
+}
+
+.success-text {
+  color: #86efac;
+  font-weight: 700;
 }
 
 .error-banner {
