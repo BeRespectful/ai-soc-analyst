@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, FileText, Network, Radar } from "lucide-react";
 
 import { getAlert, getInvestigation, updateInvestigationNotes } from "../api/client";
+import { AiSummaryPanel } from "../components/AiSummaryPanel";
 import { AlertStatusSelect } from "../components/AlertStatusSelect";
 import { KqlCopilotPanel } from "../components/KqlCopilotPanel";
 import { KqlPanel } from "../components/KqlPanel";
@@ -134,6 +135,7 @@ export function Investigation() {
         </div>
       </section>
 
+      <AiSummaryPanel alert={alert} />
       <KqlCopilotPanel alertId={alert.id} />
       <MITREPanel alert={alert} />
 
