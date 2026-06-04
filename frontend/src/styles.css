@@ -28,6 +28,8 @@ a {
 }
 
 button,
+input,
+select,
 textarea {
   font: inherit;
 }
@@ -210,6 +212,22 @@ button {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.dashboard-filters {
+  margin-bottom: 1rem;
+}
+
+.dashboard-filters .panel-header > span {
+  color: #d9f4ff;
+  font-weight: 800;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: minmax(18rem, 1fr) minmax(10rem, 0.35fr) minmax(10rem, 0.35fr) auto;
+  gap: 1rem;
+  align-items: end;
+}
+
 .detail-grid,
 .investigation-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -305,6 +323,12 @@ th {
 .alert-link {
   display: grid;
   gap: 0.25rem;
+}
+
+.empty-table-cell {
+  padding: 2rem;
+  color: #8aa4c3;
+  text-align: center;
 }
 
 .alert-link span,
@@ -527,9 +551,10 @@ td,
   font-weight: 700;
 }
 
+input,
+select,
 textarea {
   width: 100%;
-  resize: vertical;
   border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 0.9rem;
   padding: 0.9rem;
@@ -538,8 +563,28 @@ textarea {
   outline: none;
 }
 
+textarea {
+  resize: vertical;
+}
+
+select {
+  appearance: none;
+}
+
+input:focus,
+select:focus,
 textarea:focus {
   border-color: rgba(62, 166, 255, 0.7);
+}
+
+.filter-clear-button {
+  min-height: 3.1rem;
+  justify-content: center;
+}
+
+.filter-clear-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .kql-panel .primary-button,
@@ -645,6 +690,7 @@ pre {
 
   .stats-grid,
   .detail-grid,
+  .filter-grid,
   .investigation-grid,
   .split-list,
   .verdict-grid {
@@ -664,6 +710,7 @@ pre {
 
   .stats-grid,
   .detail-grid,
+  .filter-grid,
   .investigation-grid,
   .split-list,
   .verdict-grid,
