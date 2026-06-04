@@ -427,6 +427,11 @@ td,
 
 .ai-summary-panel {
   display: flow-root;
+  position: relative;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(15, 32, 55, 0.98), rgba(7, 17, 32, 0.98)),
+    #071120;
 }
 
 .ai-summary-hero,
@@ -462,7 +467,7 @@ td,
 .next-steps-card {
   padding: 1rem;
   border-radius: 1rem;
-  background: rgba(148, 163, 184, 0.08);
+  background: rgba(16, 31, 52, 0.96);
 }
 
 .ai-summary-grid span {
