@@ -11,6 +11,7 @@ First version of an AI-assisted SOC Analyst platform for alert triage, investiga
 - KQL Copilot for natural language investigation requests with query explanations
 - AI alert summary panel on investigations with risk, suspicious rationale, and next steps
 - Dedicated MITRE ATT&CK panel with technique context and analyst guidance
+- Incident report generator for formatted investigation summaries
 - AI analysis panel with summary, likely attack path, recommendations, and confidence
 - Verdict panel for True Positive, False Positive, and Suspicious dispositions
 - FastAPI backend with sample alert dataset and deterministic analysis helpers

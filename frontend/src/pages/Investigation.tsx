@@ -5,6 +5,7 @@ import { ArrowLeft, FileText, Network, Radar } from "lucide-react";
 import { getAlert, getInvestigation, updateInvestigationNotes } from "../api/client";
 import { AiSummaryPanel } from "../components/AiSummaryPanel";
 import { AlertStatusSelect } from "../components/AlertStatusSelect";
+import { IncidentReportPanel } from "../components/IncidentReportPanel";
 import { KqlCopilotPanel } from "../components/KqlCopilotPanel";
 import { KqlPanel } from "../components/KqlPanel";
 import { MITREPanel } from "../components/MITREPanel";
@@ -166,6 +167,7 @@ export function Investigation() {
       </section>
 
       <KqlPanel alertId={alert.id} />
+      <IncidentReportPanel alert={alert} investigation={investigation} />
     </main>
   );
 }

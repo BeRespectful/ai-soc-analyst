@@ -444,6 +444,7 @@ td,
 
 .ai-panel,
 .ai-summary-panel,
+.incident-report-panel,
 .kql-copilot-panel,
 .kql-panel,
 .mitre-panel,
@@ -472,11 +473,7 @@ td,
   background: rgba(0, 120, 212, 0.12);
 }
 
-.ai-summary p {
-  margin: 0;
-  line-height: 1.55;
-}
-
+.ai-summary p,
 .ai-summary-hero p {
   margin: 0;
   line-height: 1.55;
@@ -491,13 +488,32 @@ td,
 }
 
 .ai-summary-grid > div,
-.next-steps-card {
+.next-steps-card,
+.split-list > div,
+.hypothesis,
+.copilot-result,
+.incident-report-output,
+.mitre-context > div,
+.mitre-reference-grid > div,
+.query-result,
+.report-section,
+.verdict-response {
   padding: 1rem;
   border-radius: 1rem;
+  background: rgba(148, 163, 184, 0.08);
+}
+
+.ai-summary-grid > div,
+.next-steps-card {
   background: rgba(16, 31, 52, 0.96);
 }
 
-.ai-summary-grid span {
+.ai-summary-grid span,
+.copilot-meta span,
+.copilot-steps span,
+.mitre-summary span,
+.mitre-context span,
+.report-title-row span {
   color: #8aa4c3;
   font-size: 0.76rem;
   font-weight: 800;
@@ -505,7 +521,8 @@ td,
   text-transform: uppercase;
 }
 
-.ai-summary-grid p {
+.ai-summary-grid p,
+.mitre-context p {
   margin: 0.45rem 0 0;
   color: #d9e7f7;
   line-height: 1.55;
@@ -561,18 +578,6 @@ td,
   gap: 1rem;
 }
 
-.split-list > div,
-.hypothesis,
-.copilot-result,
-.mitre-context > div,
-.mitre-reference-grid > div,
-.query-result,
-.verdict-response {
-  padding: 1rem;
-  border-radius: 1rem;
-  background: rgba(148, 163, 184, 0.08);
-}
-
 .split-list li {
   margin-bottom: 0.5rem;
   color: #a7b8cc;
@@ -614,15 +619,6 @@ td,
   font-weight: 800;
 }
 
-.mitre-summary span,
-.mitre-context span {
-  color: #8aa4c3;
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 .mitre-summary strong {
   color: #f4f7fb;
 }
@@ -636,12 +632,6 @@ td,
 .mitre-context {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-bottom: 1rem;
-}
-
-.mitre-context p {
-  margin: 0.45rem 0 0;
-  color: #d9e7f7;
-  line-height: 1.55;
 }
 
 .mitre-reference-grid {
@@ -673,6 +663,57 @@ td,
   left: 0;
   color: #72d7ff;
   content: "•";
+}
+
+.report-intro {
+  max-width: 820px;
+  margin: 0;
+  color: #a7b8cc;
+  line-height: 1.55;
+}
+
+.report-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.incident-report-output {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.report-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(62, 166, 255, 0.22);
+  border-radius: 1rem;
+  background: rgba(0, 120, 212, 0.12);
+}
+
+.report-title-row h3,
+.report-section h4 {
+  margin: 0.25rem 0 0;
+}
+
+.report-title-row strong {
+  color: #ff5d73;
+  font-size: 1.25rem;
+}
+
+.report-section {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.report-section pre {
+  white-space: pre-wrap;
 }
 
 .timeline {
@@ -768,6 +809,7 @@ textarea:focus {
 .kql-panel .primary-button,
 .kql-copilot-panel .primary-button,
 .notes-panel .primary-button,
+.incident-report-panel .primary-button,
 .verdict-panel .primary-button {
   margin-top: 0.85rem;
 }
